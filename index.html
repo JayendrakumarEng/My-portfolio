@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jayendra Kumar | Software Engineer</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #050505;
+      --surface: rgba(255, 255, 255, 0.03);
+      --surface-hover: rgba(255, 255, 255, 0.08);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(204, 255, 0, 0.4);
+      --accent: #ccff00; /* Neon Lime */
+      --text: #f3f4f6;
+      --dim: #9ca3af;
+      --radius: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    ::selection { background: var(--accent); color: #000; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* TYPOGRAPHY */
+    h1, h2, h3, .logo { font-family: 'Syne', sans-serif; font-weight: 800; }
+    .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; letter-spacing: -0.02em; }
+
+    /* NAV (Glassmorphism) */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(5, 5, 5, 0.6);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { color: var(--text); text-decoration: none; font-size: 1.5rem; letter-spacing: -0.05em; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--dim); text-decoration: none; font-size: 0.9rem;
+      transition: var(--transition); font-weight: 500;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    
+    /* MOBILE MENU */
+    .hamburger {
+      display: none; flex-direction: column; gap: 4px; background: none; border: none; cursor: pointer;
+    }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--text); transition: var(--transition); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden; padding: 0 2rem; text-align: center;
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(circle at 50% 50%, black 20%, transparent 80%);
+      opacity: 0.4; z-index: -2;
+    }
+    .hero-glow {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 600px; height: 600px; background: radial-gradient(circle, rgba(204,255,0,0.15) 0%, transparent 60%);
+      filter: blur(60px); z-index: -1; pointer-events: none;
+    }
+    
+    .profile-photo {
+      width: 140px; height: 140px; border-radius: 50%; object-fit: cover;
+      border: 2px solid var(--accent); padding: 4px; background: var(--surface);
+      margin: 0 auto 1.5rem auto; box-shadow: 0 10px 30px rgba(204,255,0,0.15);
+    }
+
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 16px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 50px; margin-bottom: 2rem;
+    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
+    
+    h1 { font-size: clamp(3rem, 10vw, 7rem); line-height: 0.9; letter-spacing: -0.04em; margin-bottom: 1rem; text-transform: uppercase; }
+    .hero-subtitle { font-size: clamp(1.2rem, 3vw, 1.8rem); color: var(--dim); margin-bottom: 2rem; font-family: 'Outfit'; font-weight: 300; }
+    
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 12px 28px; background: var(--text); color: var(--bg);
+      text-decoration: none; font-weight: 600; border-radius: 50px;
+      transition: var(--transition); font-size: 1rem; cursor: pointer; border: none;
+    }
+    .btn:hover { background: var(--accent); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(204,255,0,0.2); }
+    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn-outline:hover { background: var(--surface-hover); border-color: var(--accent); color: var(--accent); box-shadow: none; }
+    .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* INFINITE MARQUEE */
+    .marquee-container {
+      background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 1.5rem 0; overflow: hidden; display: flex; white-space: nowrap; width: 100%;
+    }
+    .marquee-content {
+      display: flex; gap: 3rem; align-items: center;
+      animation: marquee 25s linear infinite;
+    }
+    .marquee-item { font-family: 'Syne'; font-size: 1.5rem; font-weight: 700; color: var(--dim); text-transform: uppercase; display: flex; align-items: center; gap: 3rem; }
+    .marquee-item span { color: var(--accent); font-size: 1rem; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* LAYOUT COMMONS */
+    section { padding: 8rem 2rem; max-width: 1200px; margin: 0 auto; }
+    .section-title { font-size: clamp(2.5rem, 5vw, 4rem); text-transform: uppercase; margin-bottom: 3rem; letter-spacing: -0.03em; }
+    .section-title span { color: var(--accent); }
+
+    /* BENTO BOX (About & Experience) */
+    .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .bento-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 2.5rem; transition: var(--transition); backdrop-filter: blur(10px);
+    }
+    .bento-card:hover { border-color: var(--border-hover); background: var(--surface-hover); transform: translateY(-5px); }
+    .bento-card p { color: var(--dim); font-size: 1.1rem; margin-bottom: 1rem; }
+    .bento-card h3 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text); }
+    
+    /* SKILLS SPECIFIC */
+    .skills-wrapper { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1rem; }
+    .skill-badge {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      padding: 8px 16px; border-radius: 50px; font-size: 0.9rem; color: var(--text);
+      font-family: 'JetBrains Mono', monospace; transition: var(--transition);
+    }
+    .skill-badge:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* EXPERIENCE SPECIFIC */
+    .exp-date { color: var(--accent); margin-bottom: 1rem; display: block; }
+    .exp-list { list-style: none; margin-top: 1.5rem; }
+    .exp-list li { position: relative; padding-left: 1.5rem; color: var(--dim); margin-bottom: 0.8rem; }
+    .exp-list li::before { content: '▹'; position: absolute; left: 0; color: var(--accent); font-family: 'JetBrains Mono'; }
+
+    /* PROJECTS */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 2rem; display: flex; flex-direction: column; transition: var(--transition);
+      position: relative; overflow: hidden;
+    }
+    .project-card:hover { transform: translateY(-8px) scale(1.01); border-color: var(--border-hover); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+    .project-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+      background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+    }
+    .project-card:hover::before { transform: scaleX(1); }
+    
+    .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
+    .folder-icon { font-size: 2rem; color: var(--accent); }
+    .project-links a { color: var(--dim); text-decoration: none; font-size: 1.2rem; transition: var(--transition); }
+    .project-links a:hover { color: var(--accent); }
+    
+    .project-title { font-size: 1.4rem; margin-bottom: 1rem; letter-spacing: -0.02em; }
+    .project-desc { color: var(--dim); flex-grow: 1; margin-bottom: 2rem; font-size: 0.95rem; }
+    
+    .tech-stack { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tech-pill {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; color: var(--dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* CONTACT */
+    #contact { text-align: center; padding-bottom: 10rem; }
+    .contact-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 5rem 2rem; max-width: 800px; margin: 0 auto; backdrop-filter: blur(10px);
+    }
+    .contact-card h2 { font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 1.5rem; }
+    .contact-card p { color: var(--dim); margin-bottom: 3rem; font-size: 1.2rem; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--dim); }
+
+    /* ANIMATIONS */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem; }
+      .hamburger { display: flex; z-index: 101; }
+      .nav-links {
+        position: fixed; top: 0; right: -100%; height: 100vh; width: 100%;
+        background: var(--bg); flex-direction: column; justify-content: center; align-items: center;
+        gap: 3rem; transition: var(--transition); z-index: 100;
+      }
+      .nav-links.active { right: 0; }
+      .nav-links a { font-size: 1.5rem; font-family: 'Syne'; font-weight: 700; }
+      
+      .bento-grid { grid-template-columns: 1fr; }
+      .hero-ctas { flex-direction: column; width: 100%; padding: 0 2rem; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#hero" class="logo">JK<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Toggle Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="fade-up">
+      <img src="image_3485f5.jpg" alt="Jayendra Kumar" class="profile-photo" />
+      <div class="status-pill mono">
+        <span class="status-dot"></span> Available for Engineering Roles
+      </div>
+      <h1>Jayendra<br>Kumar</h1>
+      <p class="hero-subtitle">Building scalable systems across the MERN stack & AWS.</p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn">Explore Work</a>
+        <a href="https://github.com/JayendrakumarEng" target="_blank" class="btn btn-outline">GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee-container">
+    <div class="marquee-content">
+      <div class="marquee-item">
+        REACT.JS <span>✦</span> NODE.JS <span>✦</span> MONGODB <span>✦</span> AWS <span>✦</span> GENERATIVE AI <span>✦</span> PYTHON <span>✦</span> DOCKER <span>✦</span> TENSORFLOW <span>✦</span>
+      </div>
+      <div class="marquee-item">
+        REACT.JS <span>✦</span> NODE.JS <span>✦</span> MONGODB <span>✦</span> AWS <span>✦</span> GENERATIVE AI <span>✦</span> PYTHON <span>✦</span> DOCKER <span>✦</span> TENSORFLOW <span>✦</span>
+      </div>
+    </div>
+  </div>
+
+  <section id="about">
+    <h2 class="section-title fade-up">Background<span>.</span></h2>
+    <div class="bento-grid">
+      
+      <div class="bento-card fade-up">
+        <h3>The TL;DR</h3>
+        <p>I'm a final-year B.Tech IT undergraduate at Techno India College of Technology in Kolkata.</p>
+        <p>I specialize in Full Stack Development (MERN), Cloud Architecture, and leveraging GenAI to build intelligent, high-performance applications. I care deeply about writing clean code and creating systems that scale smoothly.</p>
+        <br>
+        <a href="https://linkedin.com/in/jayendra-kr" target="_blank" class="mono" style="color:var(--accent); text-decoration:none;">Connect on LinkedIn →</a>
+      </div>
+
+      <div class="bento-card fade-up" id="skills" style="transition-delay: 100ms;">
+        <h3>Technical Arsenal</h3>
+        <p>Technologies I work with on a daily basis to build production-grade systems.</p>
+        <div class="skills-wrapper">
+          <span class="skill-badge">JavaScript (ES6+)</span>
+          <span class="skill-badge">Python</span>
+          <span class="skill-badge">Java</span>
+          <span class="skill-badge">React.js</span>
+          <span class="skill-badge">Node.js</span>
+          <span class="skill-badge">MongoDB</span>
+          <span class="skill-badge">AWS EC2/S3</span>
+          <span class="skill-badge">TensorFlow</span>
+          <span class="skill-badge">Docker</span>
+          <span class="skill-badge">Socket.io</span>
+          <span class="skill-badge">WebRTC</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="experience">
+    <h2 class="section-title fade-up">Experience<span>.</span></h2>
+    <div class="bento-grid">
+      
+      <div class="bento-card fade-up">
+        <h3>Data Analytics Intern</h3>
+        <span class="exp-date mono">Deloitte Australia (Remote) • 2024</span>
+        <ul class="exp-list">
+          <li>Analyzed complex client datasets to identify data inconsistencies and quality issues.</li>
+          <li>Designed strategic dashboards in Tableau to visualize trends for non-technical stakeholders.</li>
+        </ul>
+      </div>
+
+      <div class="bento-card fade-up" style="transition-delay: 100ms;">
+        <h3>GenAI Analytics Intern</h3>
+        <span class="exp-date mono">Tata Group (Remote) • 2024</span>
+        <ul class="exp-list">
+          <li>Leveraged Generative AI tools to automate insight generation from large-scale business datasets.</li>
+          <li>Created executive-level visualizations clarifying market trends for strategic decision-making.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2 class="section-title fade-up">Featured Work<span>.</span></h2>
+    <div class="projects-grid">
+      
+      <div class="project-card fade-up">
+        <div class="project-header">
+          <div class="folder-icon">⌘</div>
+          <div class="project-links"><a href="https://github.com/JayendrakumarEng" target="_blank">↗</a></div>
+        </div>
+        <h3 class="project-title">Smart Inventory & Demand AI</h3>
+        <p class="project-desc">Intelligent inventory system automating stock replenishment. Built with predictive demand analysis and time-series algorithms to prevent stockouts.</p>
+        <div class="tech-stack">
+          <span class="tech-pill">Python</span><span class="tech-pill">React</span><span class="tech-pill">Node.js</span><span class="tech-pill">Scikit-learn</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" style="transition-delay: 100ms;">
+        <div class="project-header">
+          <div class="folder-icon">⌘</div>
+          <div class="project-links"><a href="https://github.com/JayendrakumarEng" target="_blank">↗</a></div>
+        </div>
+        <h3 class="project-title">Sub-100ms Quiz Platform</h3>
+        <p class="project-desc">Engineered a multi-user competitive quiz app utilizing Socket.io for bidirectional, ultra-low latency score synchronization and a persistent MongoDB leaderboard.</p>
+        <div class="tech-stack">
+          <span class="tech-pill">React.js</span><span class="tech-pill">Socket.io</span><span class="tech-pill">Express</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" style="transition-delay: 200ms;">
+        <div class="project-header">
+          <div class="folder-icon">⌘</div>
+          <div class="project-links"><a href="https://github.com/JayendrakumarEng" target="_blank">↗</a></div>
+        </div>
+        <h3 class="project-title">LiveGuard Biometric KYC</h3>
+        <p class="project-desc">Developed a facial recognition system with liveness detection to prevent spoofing. Engineered a high-throughput matching backend for secure logins.</p>
+        <div class="tech-stack">
+          <span class="tech-pill">OpenCV</span><span class="tech-pill">TensorFlow</span><span class="tech-pill">AWS S3</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-up">
+        <div class="project-header">
+          <div class="folder-icon">⌘</div>
+          <div class="project-links"><a href="https://github.com/JayendrakumarEng" target="_blank">↗</a></div>
+        </div>
+        <h3 class="project-title">WebRTC E-Learning Hub</h3>
+        <p class="project-desc">Architected an education platform featuring live video classrooms via WebRTC, complete with Role-Based Access Control for secure content management.</p>
+        <div class="tech-stack">
+          <span class="tech-pill">WebRTC</span><span class="tech-pill">Node.js</span><span class="tech-pill">MongoDB</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" style="transition-delay: 100ms;">
+        <div class="project-header">
+          <div class="folder-icon">⌘</div>
+          <div class="project-links"><a href="https://github.com/JayendrakumarEng" target="_blank">↗</a></div>
+        </div>
+        <h3 class="project-title">Secure Contact Directory</h3>
+        <p class="project-desc">Secure contact system with JWT auth and encrypted storage. Implemented optimized indexing search algorithms to achieve O(1) retrieval efficiency.</p>
+        <div class="tech-stack">
+          <span class="tech-pill">MERN</span><span class="tech-pill">JWT</span><span class="tech-pill">Bcrypt</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-card fade-up">
+      <div class="status-pill mono" style="margin-bottom: 1rem;"><span class="status-dot"></span> Online</div>
+      <h2>Let's build something.</h2>
+      <p>Currently seeking Software Engineering roles. My inbox is always open.</p>
+      <div class="hero-ctas" style="margin-top: 2rem;">
+        <a href="mailto:jk.sharma9777@gmail.com" class="btn">Say Hello ↗</a>
+        <a href="https://linkedin.com/in/jayendra-kr" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="mono">© 2026 Jayendra Kumar. Designed & Built for the Web.</p>
+  </footer>
+
+  <script>
+    // Mobile Menu Toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+
+    // Intersection Observer for smooth Scroll Fade-Ups
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-up').forEach(element => {
+      observer.observe(element);
+    });
+  </script>
+</body>
+</html>
