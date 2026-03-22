@@ -1,94 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(45deg, #f3e6e3, #e6f3fc);
-            animation: backgroundAnimation 30s infinite alternate;
-        }
-
-        @keyframes backgroundAnimation {
-            0% { background-color: #f3e6e3; }
-            100% { background-color: #e6f3fc; }
-        }
-
-        .hero {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            animation: fadeIn 2s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .hero img {
-            width: 100%;
-            height: auto;
-            animation: rotate 5s infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 20px;
-        }
-
-        .gallery-item {
-            margin: 10px;
-            width: calc(25% - 20px);
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s;
-        }
-
-        .gallery-item:hover {
-            transform: scale(1.1);
-        }
-
-        h1 {
-            color: #6a1b9a;
-            text-align: center;
-            margin: 20px;
-            font-size: 56px;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-            animation: textAnimation 1s ease forwards;
-        }
-
-        @keyframes textAnimation {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-    </style>
+    <title>Professional Portfolio</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <div class="hero">
-        <img src="hero-image.jpg" alt="Professional Portfolio">
-    </div>
-    <h1>Welcome to My Portfolio</h1>
-    <div class="gallery">
-        <div class="gallery-item"><img src="profile1.jpg" alt="Profile 1"></div>
-        <div class="gallery-item"><img src="profile2.jpg" alt="Profile 2"></div>
-        <div class="gallery-item"><img src="profile3.jpg" alt="Profile 3"></div>
-        <div class="gallery-item"><img src="profile4.jpg" alt="Profile 4"></div>
-    </div>
+    <header>
+        <h1>Welcome to My Professional Portfolio</h1>
+    </header>
+    <main>
+        <section id="about">
+            <h2>About Me</h2>
+            <p>Here is a brief introduction about myself...</p>
+        </section>
+        <section id="projects">
+            <h2>Projects</h2>
+            <ul>
+                <li>Project 1</li>
+                <li>Project 2</li>
+                <li>Project 3</li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>Contact: email@example.com</p>
+    </footer>
 </body>
 </html>
